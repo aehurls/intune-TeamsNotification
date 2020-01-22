@@ -1,4 +1,4 @@
-# intune-TeamsNotification
+# intune-TeamsNotification, intune-SlackNoficiation, intune-EmailNotification
 
 A script that uses the PSTeams module to post notifications to a Microsoft Teams Incoming Webhook connector.
 
