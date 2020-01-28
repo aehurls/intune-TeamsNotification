@@ -15,3 +15,6 @@ You can workaround the PSSlack module if you don't want to install the module on
 
 The use case here woould be if you have a Windows 10 BYOD policy and have users adding devices to AzureAD/Intune.
 
+---------------------
+
+Webhook-Notification.ps1 will use the native invoke command to send information to your chosen webhook. You must edit the $payload information to format to your chosen method of JSON output.
