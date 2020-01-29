@@ -19,6 +19,9 @@ $enableTesting = $false
     # Get Computer Serialnumber
     $serialnumber = Get-WmiObject win32_bios | select -Expand serialnumber
 
+    # Get Wifi Mac Address
+    $macaddress = get-netadapter -name wi-fi* | select -Expand MacAddress
+
     # Get OS install date
     $installdate = ([WMI]'').ConvertToDateTime((Get-WmiObject Win32_OperatingSystem).InstallDate).ToString()
 
@@ -84,7 +87,8 @@ $payload = @{
 "computer_name" = "$computername"
 "os" = "$OSDisplayname"
 "install_date" = "$installdate"
+"macaddress" = "$macaddress"
 }
 
 #Send to the Webhook
-Invoke-WebRequest -Uri http://wbhookhere -Method Post -Body (ConvertTo-Json -Compress -InputObject $payload) -ContentType “application/json”
+Invoke-WebRequest -Uri https://www.webhookhere.com/ -Method Post -Body (ConvertTo-Json -Compress -InputObject $payload) -ContentType “application/json”
