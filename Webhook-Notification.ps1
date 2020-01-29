@@ -29,6 +29,7 @@ $enableTesting = $false
     $time = Get-Date -Format "dd/MM/yyyy HH:mm"
 
     # Get a nice display friendly OS Name
+    $OSinfo = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
     $OSDisplayName = "$($OSinfo.ProductName) $($OSinfo.ReleaseID)"
 
 ##### End custom logic #####
