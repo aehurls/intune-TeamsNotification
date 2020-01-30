@@ -11,7 +11,7 @@ $enableTesting = $false
     # Get any information you want posted here
 
     # Get logged in user
-    $currentUser = $env:username
+    $currentUser = ( ( Get-WMIObject -class Win32_ComputerSystem | Select-Object -ExpandProperty username ) -split '\\' )[1]
 
     # Get the Computer Name
     $computername = $env:computername
@@ -20,7 +20,7 @@ $enableTesting = $false
     $serialnumber = Get-WmiObject win32_bios | select -Expand serialnumber
 
     # Get Wifi Mac Address
-    $macaddress = get-netadapter -name wi-fi* | select -Expand MacAddress
+    $macaddress = get-netadapter -name wi-fi | select -Expand MacAddress
 
     # Get OS install date
     $installdate = ([WMI]'').ConvertToDateTime((Get-WmiObject Win32_OperatingSystem).InstallDate).ToString()
@@ -81,10 +81,10 @@ if ((isNewInstall) -eq $false) {
 
 # Building the notification design and post to your webhook
 $payload = @{
-“type” = “windows.enrolled”
-“at” = “$time”
-“id” = “$currentuser"
-“serial_number” = “$serialnumber”
+"type" = "windows.enrolled"
+"at" = "$time"
+"id" = "$currentuser"
+"serial_number" = "$serialnumber"
 "computer_name" = "$computername"
 "os" = "$OSDisplayname"
 "install_date" = "$installdate"
@@ -92,4 +92,4 @@ $payload = @{
 }
 
 #Send to the Webhook
-Invoke-WebRequest -Uri https://www.webhookhere.com/ -Method Post -Body (ConvertTo-Json -Compress -InputObject $payload) -ContentType “application/json”
+Invoke-WebRequest -Uri https://www.webhookurl -Method Post -Body (ConvertTo-Json -Compress -InputObject $payload) -ContentType “application/json”
